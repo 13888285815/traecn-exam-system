@@ -38,17 +38,8 @@ export function simpleHash(str: string): string {
  * 密码哈希（优先使用 Web Crypto API，降级到 simpleHash）
  */
 export async function hashPassword(password: string): Promise<string> {
-  if (crypto.subtle) {
-    try {
-      const encoder = new TextEncoder()
-      const data = encoder.encode(password + PASSWORD_SALT)
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-      const hashArray = Array.from(new Uint8Array(hashBuffer))
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-    } catch {
-      // fallback
-    }
-  }
+  // 始终使用 simpleHash 保证浏览器一致性
+  // Web Crypto API 在某些受限环境下可能不可用
   return simpleHash(password + PASSWORD_SALT)
 }
 

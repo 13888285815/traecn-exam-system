@@ -182,7 +182,7 @@ function startEndless() {
     router.push('/login')
     return
   }
-  ElMessage.info('无尽模式即将开放，敬请期待！')
+  router.push('/exam/endless')
 }
 </script>
 

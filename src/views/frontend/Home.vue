@@ -130,6 +130,22 @@
             <el-button type="primary" size="default" @click="handleTrial">立即申请</el-button>
           </el-form-item>
         </el-form>
+        <!-- 演示账号提示 -->
+        <div class="demo-hint">
+          <el-tag type="warning" size="large">💡 演示账号</el-tag>
+          <div class="demo-accounts">
+            <div class="demo-account">
+              <span class="demo-role">👤 学生</span>
+              <code>student</code> / <code>123456</code>
+              <el-button size="small" type="primary" @click="quickLogin('student', '123456')">一键登录</el-button>
+            </div>
+            <div class="demo-account">
+              <span class="demo-role">🔐 管理员</span>
+              <code>admin</code> / <code>admin123</code>
+              <el-button size="small" type="success" @click="quickLogin('admin', 'admin123')">一键登录</el-button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -156,35 +172,47 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import {
   Collection, Document, Star, ArrowRight, Clock, Trophy,
   EditPen, TrendCharts, Notebook, MagicStick, Upload, Wallet
 } from '@element-plus/icons-vue'
+import { useAuthStore } from '../../stores/auth'
 import { mockQuestionBanks, mockExamPapers } from '../../data/mockData'
+
+const router = useRouter()
+const authStore = useAuthStore()
 
 // ---- 轮播数据 ----
 const bannerItems = [
   {
     title: '海量题库，智能刷题',
-    desc: '涵盖计算机、数学、英语、物理等多个学科，数十万道精选试题，支持多种练习模式',
+    desc: '涵盖计算机、数学、英语、物理等多个学科，支持多种练习模式',
     btnText: '开始刷题',
     link: '/question',
     bg: 'linear-gradient(135deg, #4A6CF7 0%, #6B8AFF 100%)'
   },
   {
     title: '在线考试，实时评分',
-    desc: '支持单选、多选、判断、填空、问答等多种题型，自动评分，实时查看结果',
+    desc: '支持单选、多选、判断、填空、问答等多种题型，自动评分，即时出结果',
     btnText: '参加考试',
     link: '/exam',
     bg: 'linear-gradient(135deg, #67C23A 0%, #85CE61 100%)'
   },
   {
     title: '企业培训，高效管理',
-    desc: '为企业提供一站式培训考试解决方案，支持员工管理、培训任务、数据分析',
+    desc: '为企业提供一站式培训考试解决方案，支持员工管理、数据分析',
     btnText: '了解更多',
     link: '/shop',
     bg: 'linear-gradient(135deg, #E6A23C 0%, #F0C78A 100%)'
+  },
+  {
+    title: '🎯 零门槛，立即体验',
+    desc: '打开即用！预置演示账号：学生 student/123456，管理员 admin/admin123',
+    btnText: '立即体验',
+    link: '/exam',
+    bg: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)'
   }
 ]
 
@@ -240,6 +268,19 @@ const newFeatures = [
 const publishedExams = computed(() =>
   mockExamPapers.filter(e => e.status === 'published')
 )
+
+async function quickLogin(username: string, password: string) {
+  if (authStore.isLoggedIn) {
+    authStore.logout()
+  }
+  const result = await authStore.login(username, password)
+  if (result.success) {
+    ElMessage.success(`已以 ${username} 身份登录`)
+    router.push('/exam')
+  } else {
+    ElMessage.error(result.message)
+  }
+}
 
 // ---- 免费试用表单 ----
 const trialForm = ref({ contact: '' })
@@ -548,6 +589,44 @@ function handleTrial() {
 
 .trial-form .el-input {
   width: 300px;
+}
+
+.demo-hint {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: #FFF8E6;
+  border: 1px solid #FFD980;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.demo-accounts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.demo-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #606266;
+}
+
+.demo-role {
+  font-weight: 600;
+  color: #303133;
+}
+
+.demo-account code {
+  background: #F5F7FA;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #4A6CF7;
 }
 
 /* ==================== 捐助 ==================== */

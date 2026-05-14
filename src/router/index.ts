@@ -18,6 +18,7 @@ const frontendRoutes: RouteRecordRaw[] = [
       { path: 'exam/:id', name: 'ExamDetail', component: () => import('../views/frontend/ExamDetail.vue'), meta: { title: '考试详情' } },
       { path: 'exam/take/:id', name: 'TakeExam', component: () => import('../views/frontend/TakeExam.vue'), meta: { title: '参加考试', requiresAuth: true } },
       { path: 'exam/result/:id', name: 'ExamResult', component: () => import('../views/frontend/ExamResult.vue'), meta: { title: '考试结果', requiresAuth: true } },
+      { path: 'exam/endless', name: 'EndlessPractice', component: () => import('../views/frontend/EndlessPractice.vue'), meta: { title: '无尽练习', requiresAuth: true } },
       { path: 'course', name: 'CourseList', component: () => import('../views/frontend/CourseList.vue'), meta: { title: '课程列表' } },
       { path: 'course/:id', name: 'CourseDetail', component: () => import('../views/frontend/CourseDetail.vue'), meta: { title: '课程详情' } },
       { path: 'shop', name: 'Shop', component: () => import('../views/frontend/Shop.vue'), meta: { title: '商城' } },
