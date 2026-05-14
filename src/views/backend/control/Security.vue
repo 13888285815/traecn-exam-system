@@ -1,0 +1,30 @@
+<template>
+  <div class="page-container">
+    <div class="page-header">
+      <h2>安全漏洞修复</h2>
+      <p class="page-desc">查看系统安全状态和修复安全漏洞</p>
+    </div>
+    <div class="page-content">
+      <el-alert title="该功能正在开发中，敬请期待" type="info" :closable="false" show-icon />
+      <el-table :data="[]" stripe style="margin-top: 20px">
+        <el-table-column prop="name" label="项目" />
+        <el-table-column prop="status" label="状态" />
+        <el-table-column prop="updatedAt" label="更新时间" />
+        <el-table-column label="操作" width="200">
+          <template #default>
+            <el-button size="small" type="primary">编辑</el-button>
+            <el-button size="small" type="danger">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+</script>
+<style scoped>
+.page-container { padding: 20px; }
+.page-header { margin-bottom: 20px; }
+.page-header h2 { margin: 0 0 8px; font-size: 20px; }
+.page-desc { color: #999; margin: 0; }
+</style>

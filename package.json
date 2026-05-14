@@ -1,0 +1,25 @@
+{
+  "name": "exam-system",
+  "version": "1.0.0",
+  "description": "在线考试系统",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "build:pages": "vue-tsc --noEmit && vite build --mode pages",
+    "preview": "vite preview",
+    "preview:pages": "vite preview --mode pages"
+  },
+  "dependencies": {
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "pinia": "^2.1.7",
+    "element-plus": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "typescript": "^5.4.5",
+    "vite": "^5.1.4",
+    "vue-tsc": "^2.0.0"
+  }
+}
