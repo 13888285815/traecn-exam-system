@@ -63,6 +63,34 @@
       </el-col>
     </el-row>
 
+    <!-- ==================== 历史成绩（如果已登录） ==================== -->
+    <el-card v-if="authStore.isLoggedIn && userExamRecord" shadow="never" class="history-card">
+      <template #header>
+        <h2>您的考试记录</h2>
+      </template>
+      <el-descriptions :column="3" border>
+        <el-descriptions-item label="最高分">
+          <el-tag type="success">{{ userExamRecord.maxScore }}分</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="最近得分">
+          <el-tag :type="getScoreTagType(userExamRecord.latestScore)">
+            {{ userExamRecord.latestScore }}分
+          </el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="考试次数">
+          {{ userExamRecord.examCount }} 次
+        </el-descriptions-item>
+      </el-descriptions>
+      <div style="margin-top: 16px">
+        <el-button type="primary" @click="startExam">
+          <el-icon><RefreshRight /></el-icon> 再次考试
+        </el-button>
+        <el-button @click="viewLastResult">
+          <el-icon><Document /></el-icon> 查看上次成绩
+        </el-button>
+      </div>
+    </el-card>
+
     <!-- ==================== 注意事项 ==================== -->
     <el-card shadow="never" class="notice-card">
       <template #header>
@@ -91,8 +119,9 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { ArrowLeft, Clock, Trophy, Medal, Document, VideoPlay } from '@element-plus/icons-vue'
+import { ArrowLeft, Clock, Trophy, Medal, Document, VideoPlay, RefreshRight } from '@element-plus/icons-vue'
 import { mockExamPapers } from '../../data/mockData'
+import { examRecordApi } from '../../api'
 import { useAuthStore } from '../../stores/auth'
 
 const route = useRoute()
@@ -104,6 +133,51 @@ const exam = computed(() => {
   const id = Number(route.params.id)
   return mockExamPapers.find(e => e.id === id)
 })
+
+// ---- 用户历史成绩 ----
+const userExamRecord = computed(() => {
+  if (!authStore.isLoggedIn || !authStore.user?.id || !exam.value) return null
+
+  try {
+    const records = examRecordApi.getRecordsByUserId(authStore.user.id)
+      .filter(r => r.examId === exam.value!.id)
+
+    if (records.length === 0) return null
+
+    const scores = records.map(r => r.score)
+    return {
+      maxScore: Math.max(...scores),
+      latestScore: scores[scores.length - 1],
+      examCount: records.length
+    }
+  } catch {
+    return null
+  }
+})
+
+function getScoreTagType(score: number) {
+  if (score >= 90) return 'success'
+  if (score >= 60) return 'warning'
+  return 'danger'
+}
+
+function viewLastResult() {
+  if (!authStore.user?.id || !exam.value) return
+
+  try {
+    const records = examRecordApi.getRecordsByUserId(authStore.user.id)
+      .filter(r => r.examId === exam.value!.id)
+
+    if (records.length > 0) {
+      const latestRecord = records[records.length - 1]
+      router.push(`/exam/result/${latestRecord.id}`)
+    } else {
+      ElMessage.info('暂无考试记录')
+    }
+  } catch {
+    ElMessage.error('获取考试记录失败')
+  }
+}
 
 // ---- 注意事项 ----
 const notices = [
@@ -167,6 +241,17 @@ function startExam() {
 
 .header-right {
   flex-shrink: 0;
+}
+
+/* ==================== 历史成绩 ==================== */
+.history-card {
+  margin-top: 24px;
+}
+
+.history-card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #303133;
 }
 
 /* ==================== 信息卡片 ==================== */

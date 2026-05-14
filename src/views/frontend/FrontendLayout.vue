@@ -167,7 +167,7 @@
 
         <div class="footer-bottom">
           <p>Copyright &copy; {{ currentYear }} 在线考试平台 版权所有</p>
-          <p>ICP备案号：京ICP备XXXXXXXX号</p>
+          <p>ICP备案号：滇ICP备16007314号-1</p>
         </div>
       </div>
     </footer>

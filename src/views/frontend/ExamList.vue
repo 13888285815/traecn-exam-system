@@ -1,5 +1,41 @@
 <template>
   <div class="exam-list-page">
+    <!-- ==================== 搜索和筛选 ==================== -->
+    <el-card shadow="never" class="filter-card">
+      <el-row :gutter="16" align="middle">
+        <el-col :xs="24" :sm="12" :md="8">
+          <el-input
+            v-model="searchKeyword"
+            placeholder="搜索考试名称..."
+            clearable
+            @input="handleSearch"
+          >
+            <template #prefix>
+              <el-icon><Search /></el-icon>
+            </template>
+          </el-input>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="8">
+          <el-select v-model="selectedCategory" placeholder="选择分类" clearable @change="handleSearch">
+            <el-option
+              v-for="cat in categories"
+              :key="cat.value"
+              :label="cat.label"
+              :value="cat.value"
+            />
+          </el-select>
+        </el-col>
+        <el-col :xs="24" :md="8">
+          <div class="exam-stats">
+            <span class="stat-item">
+              <el-icon color="#67C23A"><CircleCheck /></el-icon>
+              共 {{ filteredExams.length }} 个考试
+            </span>
+          </div>
+        </el-col>
+      </el-row>
+    </el-card>
+
     <!-- ==================== Tab 切换 ==================== -->
     <el-tabs v-model="activeTab" class="exam-tabs">
       <!-- ==================== 标准模式 ==================== -->
@@ -37,7 +73,7 @@
             </el-card>
           </el-col>
         </el-row>
-        <el-empty v-if="publishedExams.length === 0" description="暂无可用考试" />
+        <el-empty v-if="filteredExams.length === 0" description="暂无匹配的考试" />
       </el-tab-pane>
 
       <!-- ==================== 无尽模式 ==================== -->
@@ -86,7 +122,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import {
   EditPen, Clock, Trophy, Document, RefreshRight,
-  CircleCheck, VideoPlay
+  CircleCheck, VideoPlay, Search
 } from '@element-plus/icons-vue'
 import { mockExamPapers } from '../../data/mockData'
 import { useAuthStore } from '../../stores/auth'
@@ -95,12 +131,42 @@ const router = useRouter()
 const authStore = useAuthStore()
 const activeTab = ref('standard')
 
-// ---- 已发布考试 ----
+const searchKeyword = ref('')
+const selectedCategory = ref('')
+
+const categories = [
+  { label: '计算机', value: '计算机' },
+  { label: '数学', value: '数学' },
+  { label: '英语', value: '英语' },
+  { label: '物理', value: '物理' }
+]
+
 const publishedExams = computed(() =>
   mockExamPapers.filter(e => e.status === 'published')
 )
 
-// ---- 操作 ----
+const filteredExams = computed(() => {
+  let exams = publishedExams.value
+
+  if (searchKeyword.value) {
+    const keyword = searchKeyword.value.toLowerCase()
+    exams = exams.filter(e =>
+      (e.title as any).toLowerCase().includes(keyword) ||
+      (e.description as any).toLowerCase().includes(keyword)
+    )
+  }
+
+  if (selectedCategory.value) {
+    exams = exams.filter(e => (e.bankName as any) === selectedCategory.value)
+  }
+
+  return exams
+})
+
+function handleSearch() {
+  // 搜索会在 computed 中自动更新
+}
+
 function startExam(id: number) {
   if (!authStore.isLoggedIn) {
     ElMessage.warning('请先登录')
@@ -126,7 +192,29 @@ function startEndless() {
 }
 
 .exam-tabs {
-  margin-top: 8px;
+  margin-top: 16px;
+}
+
+.filter-card {
+  margin-bottom: 16px;
+}
+
+.filter-card .el-select {
+  width: 100%;
+}
+
+.exam-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  color: #606266;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* ==================== 考试卡片 ==================== */

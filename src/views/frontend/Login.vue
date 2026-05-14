@@ -153,15 +153,18 @@ let countdownTimer: ReturnType<typeof setInterval> | null = null
 // ---- 密码登录 ----
 const passwordFormRef = ref<FormInstance>()
 const passwordForm = reactive({
-  username: 'admin',
-  password: 'admin123'
+  username: '',
+  password: ''
 })
 
 const passwordRules: FormRules = {
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, max: 20, message: '用户名长度在 3 到 20 个字符之间', trigger: 'blur' }
+  ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 3, message: '密码长度至少3位', trigger: 'blur' }
+    { min: 6, max: 20, message: '密码长度在 6 到 20 个字符之间', trigger: 'blur' }
   ]
 }
 
@@ -207,8 +210,12 @@ const emailRules: FormRules = {
 function handleSendCode() {
   if (!emailForm.email) {
     ElMessage.warning('请先输入邮箱地址')
-    return
-  }
+  return
+}
+if (!emailForm.code) {
+  ElMessage.warning('请输入验证码')
+  return
+}
   // 简单邮箱格式校验
   const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailReg.test(emailForm.email)) {

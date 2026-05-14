@@ -210,6 +210,11 @@ async function handleRegister() {
   const valid = await formRef.value.validate().catch(() => false)
   if (!valid) return
 
+  if (form.code !== '123456') {
+    ElMessage.error('验证码错误，请输入 123456 进行演示注册')
+    return
+  }
+
   loading.value = true
   try {
     const result = await authStore.register({
