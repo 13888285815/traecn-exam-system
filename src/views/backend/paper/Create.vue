@@ -80,7 +80,7 @@
           <!-- 题目列表 -->
           <el-col :span="14">
             <div class="question-pool">
-              <div v-for="q in availableQuestions" :key="q.id" class="question-pool-item" :class="{ selected: isSelected(q.id) }">
+              <div v-for="q in filteredAvailableQuestions" :key="q.id" class="question-pool-item" :class="{ selected: isSelected(q.id) }">
                 <div class="pool-item-header">
                   <el-checkbox :model-value="isSelected(q.id)" @change="toggleQuestion(q)" />
                   <el-tag :type="typeTagType(q.type)" size="small">{{ q.type }}</el-tag>
@@ -186,10 +186,42 @@ import { ElMessage } from 'element-plus'
 import type { FormInstance, FormRules } from 'element-plus'
 import { Close } from '@element-plus/icons-vue'
 
+// ---- TypeScript 类型定义 ----
+interface Question {
+  id: number
+  content: string
+  type: '单选题' | '多选题' | '判断题' | '填空题' | '简答题'
+  difficulty: '简单' | '中等' | '困难'
+  score: number
+}
+
+interface PaperForm {
+  name: string
+  description: string
+  duration: number
+  totalScore: number
+  passScore: number
+  category: string
+}
+
+interface PaperSettings {
+  shuffleQuestions: boolean
+  shuffleOptions: boolean
+  showAnswer: boolean
+  showAnalysis: boolean
+  antiCheat: boolean
+  timeLimit: boolean
+  viewHistory: boolean
+}
+
+interface PaperQuestion extends Question {
+  order: number
+}
+
 const activeStep = ref(0)
 const basicFormRef = ref<FormInstance>()
 
-const paperForm = reactive({
+const paperForm = reactive<PaperForm>({
   name: '',
   description: '',
   duration: 60,
@@ -222,7 +254,7 @@ const questionFilter = reactive({
   keyword: ''
 })
 
-const availableQuestions = ref([
+const availableQuestions = ref<Question[]>([
   { id: 1, content: 'TCP协议工作在OSI模型的哪一层？', type: '单选题', difficulty: '简单', score: 5 },
   { id: 2, content: '以下哪些是面向对象编程的特征？', type: '多选题', difficulty: '中等', score: 8 },
   { id: 3, content: '进程是资源分配的基本单位。', type: '判断题', difficulty: '简单', score: 3 },
@@ -233,7 +265,27 @@ const availableQuestions = ref([
   { id: 8, content: '以下哪些排序算法是稳定的？', type: '多选题', difficulty: '困难', score: 8 }
 ])
 
-const selectedQuestions = ref<any[]>([])
+// 根据筛选条件过滤题目
+const filteredAvailableQuestions = computed(() => {
+  let list: Question[] = availableQuestions.value
+  if (questionFilter.bank) {
+    // 模拟按题库筛选
+  }
+  if (questionFilter.type) {
+    const typeMap: Record<string, string> = { single: '单选题', multiple: '多选题', judge: '判断题', fill: '填空题', essay: '简答题' }
+    list = list.filter(q => q.type === typeMap[questionFilter.type])
+  }
+  if (questionFilter.difficulty) {
+    const diffMap: Record<string, string> = { easy: '简单', medium: '中等', hard: '困难' }
+    list = list.filter(q => q.difficulty === diffMap[questionFilter.difficulty])
+  }
+  if (questionFilter.keyword) {
+    list = list.filter(q => q.content.includes(questionFilter.keyword))
+  }
+  return list
+})
+
+const selectedQuestions = ref<PaperQuestion[]>([])
 
 const selectedTotalScore = computed(() => selectedQuestions.value.reduce((sum, q) => sum + q.score, 0))
 
@@ -241,12 +293,12 @@ function isSelected(id: number) {
   return selectedQuestions.value.some(q => q.id === id)
 }
 
-function toggleQuestion(q: any) {
+function toggleQuestion(q: Question) {
   const idx = selectedQuestions.value.findIndex(item => item.id === q.id)
   if (idx > -1) {
     selectedQuestions.value.splice(idx, 1)
   } else {
-    selectedQuestions.value.push({ ...q })
+    selectedQuestions.value.push({ ...q, order: selectedQuestions.value.length + 1 })
   }
 }
 
@@ -276,10 +328,26 @@ function handleNext() {
 }
 
 function handleSave() {
+  if (!selectedQuestions.value.length) {
+    ElMessage.warning('请至少选择一道题目')
+    return
+  }
+  const paperData = {
+    ...paperForm,
+    questions: selectedQuestions.value,
+    settings: paperSettings,
+    createdAt: new Date().toLocaleString('zh-CN')
+  }
+  console.log('保存试卷:', paperData)
   ElMessage.success('试卷保存成功')
 }
 
 function handlePublish() {
+  if (!selectedQuestions.value.length) {
+    ElMessage.warning('请至少选择一道题目')
+    return
+  }
+  handleSave()
   ElMessage.success('试卷已保存并发布')
 }
 </script>
