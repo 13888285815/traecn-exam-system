@@ -42,6 +42,7 @@
           >
             {{ loading ? '登录中...' : '登 录' }}
           </el-button>
+          <div class="login-hint">测试账号：student / 123456</div>
         </el-form-item>
       </el-form>
       <div class="login-footer">
@@ -62,8 +63,8 @@ const formRef = ref<FormInstance>()
 const loading = ref(false)
 
 const form = reactive({
-  username: 'admin',
-  password: 'admin123'
+  username: 'student',
+  password: '123456'
 })
 
 const rules: FormRules = {
@@ -161,5 +162,15 @@ async function handleLogin() {
 
 .back-link:hover {
   text-decoration: underline;
+}
+
+.login-hint {
+  text-align: center;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  padding: 6px 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
 }
 </style>

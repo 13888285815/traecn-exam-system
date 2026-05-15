@@ -52,6 +52,7 @@
               >
                 {{ loading ? '登录中...' : '登 录' }}
               </el-button>
+              <div class="login-hint">测试账号：student / 123456</div>
             </el-form-item>
           </el-form>
           <div class="login-footer">
@@ -153,8 +154,8 @@ let countdownTimer: ReturnType<typeof setInterval> | null = null
 // ---- 密码登录 ----
 const passwordFormRef = ref<FormInstance>()
 const passwordForm = reactive({
-  username: '',
-  password: ''
+  username: 'student',
+  password: '123456'
 })
 
 const passwordRules: FormRules = {
@@ -398,5 +399,15 @@ onUnmounted(() => {
   color: #bbb;
   font-size: 0.85rem;
   margin-top: 1rem;
+}
+
+.login-hint {
+  text-align: center;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  padding: 6px 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
 }
 </style>
