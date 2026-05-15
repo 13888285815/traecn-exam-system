@@ -52,7 +52,7 @@
               >
                 {{ loading ? '登录中...' : '登 录' }}
               </el-button>
-              <div class="login-hint">测试账号：student / 123456</div>
+              <div class="login-hint">测试账号：student / student（学生）admin / admin123（管理）</div>
             </el-form-item>
           </el-form>
           <div class="login-footer">

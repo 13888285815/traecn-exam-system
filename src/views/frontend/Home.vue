@@ -136,8 +136,8 @@
           <div class="demo-accounts">
             <div class="demo-account">
               <span class="demo-role">👤 学生</span>
-              <code>student</code> / <code>123456</code>
-              <el-button size="small" type="primary" @click="quickLogin('student', '123456')">一键登录</el-button>
+              <code>student</code> / <code>student</code>
+              <el-button size="small" type="primary" @click="quickLogin('student', 'student')">一键登录</el-button>
             </div>
             <div class="demo-account">
               <span class="demo-role">🔐 管理员</span>
@@ -209,7 +209,7 @@ const bannerItems = [
   },
   {
     title: '🎯 零门槛，立即体验',
-    desc: '打开即用！预置演示账号：学生 student/123456，管理员 admin/admin123',
+    desc: '打开即用！预置演示账号：学生 student/student，管理员 admin/admin123',
     btnText: '立即体验',
     link: '/exam',
     bg: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)'

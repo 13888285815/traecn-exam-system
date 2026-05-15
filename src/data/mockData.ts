@@ -35,7 +35,7 @@ export const mockUsers: User[] = [
   {
     id: 2,
     username: 'enterprise',
-    password: '000001db5aab9fd8',
+    password: '000003cea478314e',
     role: 'enterprise',
     name: '企业管理员',
     email: 'zzx@yndxw.com',
@@ -51,7 +51,7 @@ export const mockUsers: User[] = [
   {
     id: 3,
     username: 'teacher',
-    password: '0000043cc1de2fd7',
+    password: '000008a02abf7eca',
     role: 'teacher',
     name: '张老师',
     email: 'zzx@yndxw.com',
@@ -67,7 +67,7 @@ export const mockUsers: User[] = [
   {
     id: 4,
     username: 'student',
-    password: '000000fcd46197f6',
+    password: '0000012f73ed35ad',
     role: 'student',
     name: '李同学',
     email: 'zzx@yndxw.com',

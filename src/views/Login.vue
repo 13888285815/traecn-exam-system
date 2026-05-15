@@ -42,7 +42,7 @@
           >
             {{ loading ? '登录中...' : '登 录' }}
           </el-button>
-          <div class="login-hint">测试账号：student / 123456</div>
+          <div class="login-hint">测试账号：student / student</div>
         </el-form-item>
       </el-form>
       <div class="login-footer">
@@ -64,7 +64,7 @@ const loading = ref(false)
 
 const form = reactive({
   username: 'student',
-  password: '123456'
+  password: 'student'
 })
 
 const rules: FormRules = {
