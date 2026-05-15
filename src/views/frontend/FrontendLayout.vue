@@ -7,7 +7,7 @@
         <div class="header-left">
           <router-link to="/" class="logo-link">
             <el-icon :size="28" color="#4A6CF7"><Document /></el-icon>
-            <span class="site-name">在线考试平台</span>
+            <span class="site-name">云南意念科技</span>
           </router-link>
         </div>
 
@@ -166,8 +166,8 @@
         </div>
 
         <div class="footer-bottom">
-          <p>Copyright &copy; {{ currentYear }} 在线考试平台 版权所有</p>
-          <p>ICP备案号：滇ICP备16007314号-1</p>
+          <p>Copyright &copy; {{ currentYear }} 云南意念科技有限公司 版权所有</p>
+          <p>ICP备案号：滇ICP备16007314号-1 | <a href="https://tools.yndxw.com" target="_blank" style="color:inherit;text-decoration:underline">tools.yndxw.com</a></p>
         </div>
       </div>
     </footer>
@@ -184,7 +184,7 @@
           <el-icon :size="22"><Cellphone /></el-icon>
         </div>
       </el-tooltip>
-      <el-tooltip content="电话咨询" placement="left">
+      <el-tooltip content="官网咨询" placement="left">
         <div class="floating-btn" @click="openContact('phone')">
           <el-icon :size="22"><Phone /></el-icon>
         </div>
@@ -218,11 +218,11 @@
           <p class="contact-desc">扫描二维码添加微信客服</p>
         </div>
 
-        <!-- 电话咨询 -->
+        <!-- 官网咨询 -->
         <div v-if="contactType === 'phone'" class="contact-info">
           <el-icon :size="48" color="#4A6CF7"><Phone /></el-icon>
-          <p class="contact-desc">客服热线</p>
-          <p class="contact-phone">400-888-8888</p>
+          <p class="contact-desc">官方网址</p>
+          <p class="contact-phone" style="font-size:18px">tools.yndxw.com</p>
           <p class="contact-desc">工作时间：周一至周五 9:00-18:00</p>
         </div>
       </div>
@@ -319,7 +319,7 @@ const contactDialogTitle = computed(() => {
   const titles: Record<string, string> = {
     chat: '客服在线咨询',
     wechat: '微信扫码咨询',
-    phone: '电话咨询'
+    phone: '官网咨询'
   }
   return titles[contactType.value] || '联系我们'
 })

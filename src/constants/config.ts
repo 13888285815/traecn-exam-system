@@ -11,7 +11,7 @@ import { QuestionType, ExamStatus, UserRole, MemberType, OrderStatus, Enterprise
 // ============================================================
 
 /** 应用名称 */
-export const APP_NAME = 'TraeCN 在线考试系统'
+export const APP_NAME = '云南意念科技在线考试系统'
 
 /** 应用版本 */
 export const APP_VERSION = '1.0.0'

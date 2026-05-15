@@ -2,7 +2,7 @@
   <div class="register-page">
     <div class="register-card">
       <div class="register-header">
-        <h1 class="register-title">在线考试系统</h1>
+        <h1 class="register-title">云南意念科技考试系统</h1>
         <p class="register-subtitle">创建您的账号</p>
       </div>
 

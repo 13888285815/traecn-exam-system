@@ -12,7 +12,7 @@
           <Expand v-else />
         </el-icon>
         <el-icon :size="24" color="#4A6CF7"><Document /></el-icon>
-        <span class="header-title">在线考试平台 管理后台</span>
+        <span class="header-title">云南意念科技 管理后台</span>
       </div>
 
       <div class="header-center">
@@ -426,7 +426,7 @@
                 <el-icon><ChatDotRound /></el-icon>在线咨询
               </el-button>
               <el-button size="small" @click="openContact('phone')">
-                <el-icon><Phone /></el-icon>电话咨询
+                <el-icon><Phone /></el-icon>官网咨询
               </el-button>
               <el-button size="small" @click="openContact('wechat')">
                 <el-icon><Cellphone /></el-icon>微信咨询
@@ -462,8 +462,8 @@
         </div>
         <div v-if="contactType === 'phone'" class="contact-info">
           <el-icon :size="48" color="#4A6CF7"><Phone /></el-icon>
-          <p class="contact-desc">客服热线</p>
-          <p class="contact-phone">400-888-8888</p>
+          <p class="contact-desc">官方网址</p>
+          <p class="contact-phone">tools.yndxw.com</p>
           <p class="contact-desc">工作时间：周一至周五 9:00-18:00</p>
         </div>
       </div>
@@ -565,7 +565,7 @@ const contactDialogTitle = computed(() => {
   const titles: Record<string, string> = {
     chat: '客服在线咨询',
     wechat: '微信扫码咨询',
-    phone: '电话咨询'
+    phone: '官网咨询'
   }
   return titles[contactType.value] || '联系我们'
 })

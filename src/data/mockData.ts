@@ -22,7 +22,7 @@ export const mockUsers: User[] = [
     password: '000007f9805ce73d',
     role: 'admin',
     name: '系统管理员',
-    email: 'admin@exam.com',
+    email: 'zzx@yndxw.com',
     phone: '13900000001',
     avatar: '',
     status: 1,
@@ -38,7 +38,7 @@ export const mockUsers: User[] = [
     password: '000001db5aab9fd8',
     role: 'enterprise',
     name: '企业管理员',
-    email: 'enterprise@example.com',
+    email: 'zzx@yndxw.com',
     phone: '13900000002',
     avatar: '',
     status: 1,
@@ -54,7 +54,7 @@ export const mockUsers: User[] = [
     password: '0000043cc1de2fd7',
     role: 'teacher',
     name: '张老师',
-    email: 'teacher@example.com',
+    email: 'zzx@yndxw.com',
     phone: '13900000003',
     avatar: '',
     status: 1,
@@ -70,7 +70,7 @@ export const mockUsers: User[] = [
     password: '000000fcd46197f6',
     role: 'student',
     name: '李同学',
-    email: 'student@example.com',
+    email: 'zzx@yndxw.com',
     phone: '13900000004',
     avatar: '',
     status: 1,
@@ -101,14 +101,14 @@ export interface Enterprise {
 export const mockEnterprise: Enterprise[] = [
   {
     id: 'ent_1',
-    name: '示例科技有限公司',
+    name: '云南意念科技有限公司',
     contactPerson: '王经理',
     contactPhone: '13800001111',
-    email: 'contact@example-tech.com',
-    address: '北京市海淀区中关村大街1号',
+    email: 'zzx@yndxw.com',
+    address: '云南省昆明市',
     status: 'verified',
     createdAt: '2024-01-10 10:00:00',
-    description: '一家专注于在线教育和企业培训的科技公司'
+    description: '一家专注于在线教育和企业培训的技术服务公司'
   }
 ]
 
@@ -830,7 +830,7 @@ export const mockMessages: Message[] = [
     toUserId: 1,
     toUserName: '系统管理员',
     title: '企业认证申请',
-    content: '您好，我们公司（示例科技有限公司）已完成企业认证申请，请协助审核。如有需要补充的材料请及时通知。',
+    content: '您好，我们公司（云南意念科技有限公司）已完成企业认证申请，请协助审核。如有需要补充的材料请及时通知。',
     isRead: true,
     createdAt: '2024-01-10 10:30:00'
   },
@@ -933,7 +933,7 @@ export interface SystemSettings {
 }
 
 export const mockSystemSettings: SystemSettings = {
-  siteName: '在线考试系统',
+  siteName: '云南意念科技在线考试系统',
   logo: '',
   defaultExamDuration: 90,
   maxQuestionPerExam: 100,

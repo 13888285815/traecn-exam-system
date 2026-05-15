@@ -2,7 +2,7 @@
   <div class="login-page">
     <div class="login-card">
       <div class="login-header">
-        <h1 class="login-title">在线考试系统</h1>
+        <h1 class="login-title">云南意念科技考试系统</h1>
         <p class="login-subtitle">欢迎回来，请登录您的账号</p>
       </div>
 

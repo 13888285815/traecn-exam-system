@@ -86,7 +86,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <p>&copy; {{ new Date().getFullYear() }} 在线考试系统 All Rights Reserved</p>
+      <p>&copy; {{ new Date().getFullYear() }} 云南意念科技有限公司 All Rights Reserved</p>
     </footer>
   </div>
 </template>

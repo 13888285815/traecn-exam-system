@@ -5,7 +5,7 @@ export const useAppStore = defineStore('app', () => {
   // --- state ---
   const sidebarCollapsed = ref<boolean>(localStorage.getItem('sidebar_collapsed') === 'true')
   const currentTheme = ref<string>(localStorage.getItem('app_theme') || 'light')
-  const pageTitle = ref<string>('题库考试系统')
+  const pageTitle = ref<string>('云南意念科技考试系统')
 
   // --- actions ---
 
@@ -31,7 +31,7 @@ export const useAppStore = defineStore('app', () => {
    */
   function setPageTitle(title: string): void {
     pageTitle.value = title
-    document.title = title ? `${title} - 题库考试系统` : '题库考试系统'
+    document.title = title ? `${title} - 云南意念科技考试系统` : '云南意念科技考试系统'
   }
 
   return {
