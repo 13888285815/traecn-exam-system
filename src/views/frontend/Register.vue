@@ -193,7 +193,6 @@ function handleSendCode() {
     ElMessage.warning('请输入正确的邮箱格式')
     return
   }
-
   ElMessage.success('验证码已发送至您的邮箱')
   countdown.value = 60
   countdownTimer = setInterval(() => {

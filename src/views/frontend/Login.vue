@@ -210,19 +210,13 @@ const emailRules: FormRules = {
 function handleSendCode() {
   if (!emailForm.email) {
     ElMessage.warning('请先输入邮箱地址')
-  return
-}
-if (!emailForm.code) {
-  ElMessage.warning('请输入验证码')
-  return
-}
-  // 简单邮箱格式校验
+    return
+  }
   const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailReg.test(emailForm.email)) {
     ElMessage.warning('请输入正确的邮箱格式')
     return
   }
-
   ElMessage.success('验证码已发送至您的邮箱')
   countdown.value = 60
   countdownTimer = setInterval(() => {
