@@ -39,6 +39,10 @@
             <el-icon><Search /></el-icon>
             搜索
           </el-button>
+          <el-button size="default" @click="openAdminBackend">
+            <el-icon><Setting /></el-icon>
+            后台管理
+          </el-button>
         </div>
 
         <!-- 右侧 用户区域 -->
@@ -250,7 +254,8 @@ import {
   Download,
   ChatDotRound,
   Cellphone,
-  Phone
+  Phone,
+  Setting
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -277,6 +282,10 @@ function handleSearch() {
   if (searchKeyword.value) query.keyword = searchKeyword.value
   if (searchCategory.value) query.category = searchCategory.value
   router.push({ path: '/question', query })
+}
+
+function openAdminBackend() {
+  window.open('/admin.html', '_blank')
 }
 
 // ---- 导航 ----
