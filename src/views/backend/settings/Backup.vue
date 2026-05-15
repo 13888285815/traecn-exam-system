@@ -24,7 +24,7 @@
         <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
             <el-tag :type="row.status === 'completed' ? 'success' : row.status === 'failed' ? 'danger' : 'warning'">
-              {{ statusMap[row.status] }}
+              {{ getBackupStatusLabel(row.status) }}
             </el-tag>
           </template>
         </el-table-column>
@@ -67,6 +67,11 @@ const statusMap = {
   pending: '进行中',
   completed: '已完成',
   failed: '失败'
+}
+
+function getBackupStatusLabel(status: string) {
+  const map: Record<string, string> = { pending: '进行中', completed: '已完成', failed: '失败' }
+  return map[status] || status
 }
 
 const backups = ref<Backup[]>([

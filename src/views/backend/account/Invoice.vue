@@ -36,8 +36,8 @@
           </el-table-column>
           <el-table-column prop="status" label="状态" width="100">
             <template #default="{ row }">
-              <el-tag :type="{ pending: 'warning', issued: 'success', rejected: 'danger' }[row.status]" size="small">
-                {{ { pending: '待开具', issued: '已开具', rejected: '已拒绝' }[row.status] }}
+              <el-tag :type="getInvoiceStatusType(row.status)" size="small">
+                {{ getInvoiceStatusLabel(row.status) }}
               </el-tag>
             </template>
           </el-table-column>
@@ -89,7 +89,7 @@
         <el-descriptions-item label="发票抬头">{{ currentInvoice.title }}</el-descriptions-item>
         <el-descriptions-item label="金额">¥{{ currentInvoice.amount.toFixed(2) }}</el-descriptions-item>
         <el-descriptions-item label="类型">{{ currentInvoice.type === 'personal' ? '个人' : '企业' }}</el-descriptions-item>
-        <el-descriptions-item label="状态">{{ { pending: '待开具', issued: '已开具', rejected: '已拒绝' }[currentInvoice.status] }}</el-descriptions-item>
+        <el-descriptions-item label="状态">{{ currentInvoice ? getInvoiceStatusLabel(currentInvoice.status) : '' }}</el-descriptions-item>
       </el-descriptions>
     </el-dialog>
   </div>
@@ -144,6 +144,16 @@ function applyInvoice() {
   showApplyDialog.value = false
   applyForm.orderId = null; applyForm.title = ''; applyForm.taxNo = ''
   ElMessage.success('发票申请已提交')
+}
+
+function getInvoiceStatusType(status: string) {
+  const map: Record<string, string> = { pending: 'warning', issued: 'success', rejected: 'danger' }
+  return map[status] || 'info'
+}
+
+function getInvoiceStatusLabel(status: string) {
+  const map: Record<string, string> = { pending: '待开具', issued: '已开具', rejected: '已拒绝' }
+  return map[status] || status
 }
 </script>
 
