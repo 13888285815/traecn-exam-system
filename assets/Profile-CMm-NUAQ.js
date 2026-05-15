@@ -1,0 +1,1 @@
+import{_ as o,o as c,c as t,b as s,j as n}from"./index-9VF3dcdq.js";const a={},r={class:"placeholder-page"};function _(p,d){const e=n("el-empty");return c(),t("div",r,[s(e,{description:"个人信息编辑功能开发中"})])}const f=o(a,[["render",_],["__scopeId","data-v-497df35e"]]);export{f as default};
